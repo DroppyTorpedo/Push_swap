@@ -14,15 +14,15 @@
 #include <stdlib.h>
 t_stack *stack_new(int value)
 {
-    t_stack *new;
+    t_stack *node;
 
-    new = malloc(sizeof(t_stack));
-    if (!new)
+    node = (t_stack *)malloc(sizeof(t_stack));
+    if (!node)
         return (NULL);
-    new->value = value;
-    new->index = 0;
-    new->next = NULL;
-    return (new);
+    node->value = value;
+    node->index = 0;
+    node->next = NULL;
+    return (node);
 }
 
 void stack_add_back(t_stack **stack, t_stack *new_node)

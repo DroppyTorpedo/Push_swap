@@ -57,38 +57,27 @@ int	is_valid_number(const char *str)
 	if (!ft_isdigit_str(str))
 		return (0);
 	num = ft_atol(str);
-	if (num < INT_MIN || num > INT_MAX)
+	if (num < -2147483648 || num > 2147483647)
 		return (0);
 	return (1);
 }
 
-int	has_duplicate(t_stack *a)
+int     has_duplicate(t_stack *a)
 {
-    int		*values;
-    int		size;
-    int		i;
+    t_stack *p;
+    t_stack *q;
 
-    size = stack_size(a);
-    values = malloc(sizeof(int) * size);
-    if (!values)
-        return (1); // Retourne une erreur si l'allocation échoue
-    i = 0;
-    while (a)
+    p = a;
+    while (p)
     {
-        values[i++] = a->value;
-        a = a->next;
-    }
-    binary_search(values, 0, size - 1); // Implémentez un tri rapide
-    i = 0;
-    while (i < size - 1)
-    {
-        if (values[i] == values[i + 1])
+        q = p->next;
+        while (q)
         {
-            free(values);
-            return (1); // Doublon trouvé
+            if (q->value == p->value)
+                return (1);
+            q = q->next;
         }
-        i++;
+        p = p->next;
     }
-    free(values);
-    return (0); // Aucun doublon trouvé
+    return (0);
 }

@@ -84,8 +84,8 @@ void sort_five(t_stack **a, t_stack **b)
     int i;
     int pos;
 
-    /* extraction des indices 0 et 1 */
-    for (i = 0; i < 2; i++)
+    i = 0;
+    while (i < 2)
     {
         pos = get_index_position(*a, i);
         if (pos <= stack_size(*a) / 2)
@@ -93,6 +93,7 @@ void sort_five(t_stack **a, t_stack **b)
         else
             while (pos++ < stack_size(*a)) rra(a);
         pb(a, b);
+        i++;
     }
     /* tri des 3 éléments restants */
     sort_three(a);

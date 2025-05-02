@@ -13,38 +13,30 @@
 #include "push_swap.h"
 #include <stdlib.h>
 
-// Échange deux entiers
-void swap_int(int *a, int *b)
+void	quick_sort_median(int *array, int low, int high)
 {
-    int tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
+	int	mid;
+	int	pivot_idx;
+	int	tmp;
+	int	pi;
 
-// Renvoie l’indice du médian des trois valeurs array[i], array[j], array[k]
-int median_of_three(int *array, int i, int j, int k)
-{
-    int a = array[i], b = array[j], c = array[k];
-    if ((a < b) ^ (a < c)) return i;
-    else if ((b < a) ^ (b < c)) return j;
-    else return k;
-}
-
-// QuickSort pivot médian, O(n log n) garanti
-void quick_sort_median(int *array, int low, int high)
-{
-    if (low < high)
-    {
-        int mid = low + (high - low) / 2;
-        int pivot_idx = median_of_three(array, low, mid, high);
-        // on place le pivot médian en fin de sous-tableau
-        swap_int(&array[pivot_idx], &array[high]);
-
-        // partition classique
-        int pi = partition(array, low, high);
-        quick_sort(array, low, pi - 1);
-        quick_sort(array, pi + 1, high);
-    }
+	if (low < high)
+	{
+		mid = low + (high - low) / 2;
+		if ((array[low] <= array[mid] && array[mid] <= array[high])
+		 || (array[high] <= array[mid] && array[mid] <= array[low]))
+			pivot_idx = mid;
+		else if ((array[mid] <= array[low] && array[low] <= array[high])
+		      || (array[high] <= array[low] && array[low] <= array[mid]))
+			pivot_idx = low;
+		else pivot_idx = high;
+		tmp = array[pivot_idx];
+		array[pivot_idx] = array[high];
+		array[high] = tmp;
+		pi = partition(array, low, high);
+		quick_sort(array, low, pi - 1);
+		quick_sort(array, pi + 1, high);
+	}
 }
 
 int	*get_sorted_indexes(t_stack *stack, int size)

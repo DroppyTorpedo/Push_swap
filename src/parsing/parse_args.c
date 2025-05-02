@@ -11,50 +11,64 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
-t_stack	*parse_args(int argc, char **argv)
+int validate_and_push(t_stack **a, char *token)
 {
-	t_stack	*stack = NULL;
-	char	**args;
-	int		i = 0;
-	int		value;
+    t_stack *new;
 
-	if (argc == 2)
-	{
-		args = ft_split(argv[1], ' ');
-		if (!args || !args[0] || args[0][0] == '\0')
-		{
-            if (args)
-			    free_split(args);
-			return (NULL);
-		}
-	}
-	else
-		args = &argv[1];
+    if (!ft_isdigit_str(token) || !is_valid_number(token))
+        return (0);
+    new = stack_new((int)ft_atol(token));
+    if (!new)
+        return (0);
+    stack_add_back(a, new);
+    return (1);
+}
 
-	while (args[i])
-	{
-		if (!is_valid_number(args[i]))
-		{
-			free_stack(&stack);
-			if (argc == 2)
-				free_split(args);
-			return (NULL);
-		}
-		value = ft_atoi(args[i]);
-		if (stack_contains(stack, value))
-		{
-			free_stack(&stack);
-			if (argc == 2)
-				free_split(args);
-			return (NULL);
-		}
-		stack_add_back(&stack, stack_new(value));
-		i++;
-	}
+int process_arg(t_stack **a, char *arg)
+{
+    char    **tokens;
+    int     j;
 
-	if (argc == 2)
-		free_split(args);
-	return (stack);
+    tokens = ft_split(arg, ' ');
+    if (!tokens)
+        return (0);
+    j = 0;
+    while (tokens[j])
+    {
+        if (!validate_and_push(a, tokens[j]))
+        {
+            free_split(tokens);
+            return (0);
+        }
+        j++;
+    }
+    free_split(tokens);
+    return (1);
+}
+
+
+t_stack *parse_args(int argc, char **argv)
+{
+    t_stack *a;
+    int     i;
+
+    a = NULL;
+    i = 1;
+    while (i < argc)
+    {
+        if (!process_arg(&a, argv[i]))
+        {
+            free_stack(&a);
+            return (NULL);
+        }
+        i++;
+    }
+    if (has_duplicate(a))
+    {
+        free_stack(&a);
+        return (NULL);
+    }
+    assign_indexes(a);
+    return (a);
 }

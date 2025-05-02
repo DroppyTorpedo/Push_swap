@@ -15,6 +15,8 @@ typedef struct s_stack
 
 // Parsing
 long    ft_atol(const char *str);
+int validate_and_push(t_stack **a, char *token);
+int process_arg(t_stack **a, char *arg);
 t_stack	*parse_args(int argc, char **argv);
 int     ft_isdigit_str(const char *str);
 int     is_valid_number(const char *str);
