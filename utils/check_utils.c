@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_error_utils.c                                :+:      :+:    :+:   */
+/*   check_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnorvene <rnorvene@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 01:03:24 by rnorvene          #+#    #+#             */
-/*   Updated: 2025/04/23 01:03:24 by rnorvene         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:23:46 by rnorvene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int is_sorted(t_stack *stack)
+int	is_sorted(t_stack *stack)
 {
-    while (stack && stack->next)
-    {
-        if (stack->value > stack->next->value)
-            return (0);
-        stack = stack->next;
-    }
-    return (1);
+	while (stack && stack->next)
+	{
+		if (stack->value > stack->next->value)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
 }
 
 int	stack_has_chunk(t_stack *a, int chunk_start, int chunk_end)
@@ -51,17 +51,19 @@ int	get_index_position(t_stack *stack, int index)
 
 int	find_closest_direction(t_stack *a, int chunk_start, int chunk_end)
 {
-    int	pos;
-    int	size;
+	int	pos;
+	int	size;
 
-    pos = 0;
-    size = stack_size(a);
-    while (a)
-    {
-        if (a->index >= chunk_start && a->index <= chunk_end)
-            break;
-        a = a->next;
-        pos++;
-    }
-    return (pos <= size / 2 ? 1 : -1); // 1 pour ra, -1 pour rra
+	pos = 0;
+	size = stack_size(a);
+	while (a)
+	{
+		if (a->index >= chunk_start && a->index <= chunk_end)
+			break ;
+		a = a->next;
+		pos++;
+	}
+	if (pos <= size / 2)
+		return (1);
+	return (-1);
 }

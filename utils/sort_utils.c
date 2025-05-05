@@ -6,7 +6,7 @@
 /*   By: rnorvene <rnorvene@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 01:06:26 by rnorvene          #+#    #+#             */
-/*   Updated: 2025/04/23 01:06:26 by rnorvene         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:13:28 by rnorvene         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ void	quick_sort_median(int *array, int low, int high)
 	{
 		mid = low + (high - low) / 2;
 		if ((array[low] <= array[mid] && array[mid] <= array[high])
-		 || (array[high] <= array[mid] && array[mid] <= array[low]))
+			|| (array[high] <= array[mid] && array[mid] <= array[low]))
 			pivot_idx = mid;
 		else if ((array[mid] <= array[low] && array[low] <= array[high])
-		      || (array[high] <= array[low] && array[low] <= array[mid]))
+			|| (array[high] <= array[low] && array[low] <= array[mid]))
 			pivot_idx = low;
-		else pivot_idx = high;
+		else
+			pivot_idx = high;
 		tmp = array[pivot_idx];
 		array[pivot_idx] = array[high];
 		array[high] = tmp;
